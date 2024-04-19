@@ -29,7 +29,14 @@ const Login = (props) => {
 
   const onFinish = (values) => {
     setLoading(true);
-    props.login(values).then((response) => {
+    // Determine if the input is a username or a phone number
+    const isPhone = /^\d+$/.test(values.username);
+    const loginData = {
+      [isPhone ? 'phone' : 'username']: values.username,
+      password: values.password
+    };
+  
+    props.login(loginData).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("authToken", response.data.authToken);
       setLoading(false);
@@ -37,8 +44,7 @@ const Login = (props) => {
     }).catch((err) =>{
       setError(err);
       setLoading(false);
-    })
-
+    });
   };
   
   const onFinishFailed = (errorInfo) => {
