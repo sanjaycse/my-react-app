@@ -4,12 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from "antd" ;
+import { useNavigate } from 'react-router-dom';
 
 const GetAllStudents = (props) => {
-  console.log(props)
   const [students, setStudents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     props.getAllStudents()
@@ -23,6 +24,11 @@ const GetAllStudents = (props) => {
         setLoading(false);
       });
   }, []);
+
+  const authToken = localStorage.getItem("authToken");
+  if(!authToken){
+    navigate('/login')
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -42,10 +48,14 @@ const GetAllStudents = (props) => {
     })
   }
 
+  const handleLogout = ()=> {
+    localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
+    navigate('/login')
+  }
+
   return (
     <div>
-      <Link to={'/add'}>Add a Student</Link>
-      <br />
       Number of students: {students.length}
       {students && (
         <ul>
@@ -54,6 +64,8 @@ const GetAllStudents = (props) => {
           ))}
         </ul>
       )}
+
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
   );
 };

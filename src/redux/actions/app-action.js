@@ -58,6 +58,17 @@ export function addStudent(data) {
     };
 }
 
+export function login(data) {
+    return async function (dispatch, getState) {
+        try {
+            let resp = await API.login(data);
+            return resp;
+        } catch (e) {
+            return { error: true };
+        }
+    };
+}
+
 export function getAllCategories() {
     return async function (dispatch, getState) {
         try {

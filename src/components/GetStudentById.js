@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { useNavigate } from 'react-router-dom';
 
 const GetStudentById = (props) => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const queryParameters = new URLSearchParams(window.location.search)
   const id = queryParameters.get("id")
@@ -15,6 +17,9 @@ const GetStudentById = (props) => {
     .then((response) => {
       setStudent(response.data);
       setLoading(false);
+      if(response.error){
+        navigate('/')
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -32,7 +37,12 @@ const GetStudentById = (props) => {
   }
 
   if(!id){
-    return <div>Error: 404</div>;
+    return navigate('/')
+  }
+
+  const authToken = localStorage.getItem("authToken");
+  if(!authToken){
+    navigate('/login')
   }
   return (
     <>

@@ -21,6 +21,10 @@ const addStudent = (data) => {
     return Axios.post("http://localhost:3000/api/student/", data, undefined);
 };
 
+const login = (data) => {
+    return Axios.post("http://localhost:3000/api/student/login", data, undefined);
+};
+
 const getAllCategories = () => {
     return Axios.get("http://localhost:3000/api/category", undefined, undefined);
 };
@@ -41,5 +45,6 @@ export default {
     deleteStudentbyId,
     updateStudentbyId,
     getAllCategories,
-    addStudent
+    addStudent,
+    login
 };

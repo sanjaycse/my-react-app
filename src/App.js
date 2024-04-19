@@ -3,15 +3,20 @@ import {
   createBrowserRouter,
   RouterProvider,
   Route,
-  Link,
+  Link
 } from "react-router-dom";
 import GetAllStudents  from './components/GetAllStudents';
 import Counter from './components/Counter';
 import GetStudentById from './components/GetStudentById';
 import UpdateStudentbyId from './components/UpdateStudentbyId';
 import AddStudent from './components/AddStudent';
+import Login from './components/Login';
 
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
   {
     path: "/",
     element: <GetAllStudents />,
@@ -29,7 +34,7 @@ const router = createBrowserRouter([
     element: <UpdateStudentbyId />,
   },
   {
-    path: "/add",
+    path: "/signup",
     element: <AddStudent />,
   },
 ]);

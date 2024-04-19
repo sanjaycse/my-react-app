@@ -32,12 +32,17 @@ const AddStudent = (props) => {
     return <div>Error: {error.message}</div>;
   }
 
+  const authToken = localStorage.getItem("authToken");
+  if(authToken){
+    navigate('/')
+  }
+
   const onFinish = (values) => {
     setLoading(true);
     props.addStudent(values).then((response) => {
         setStudent(response.data);
         setLoading(false);
-        navigate('/');
+        navigate('/login');
     }).catch((err) =>{
         setError(err);
         setLoading(false);
@@ -50,13 +55,7 @@ const AddStudent = (props) => {
   };
   return (
     <>
-      <h2>Add New Student</h2>
-      {/* <ul>
-        <li>Phone: {student.phone}</li>
-        <li>Category: {student.category.name}</li>
-        <li>Is Enrolled: {student.isEnrolled? 'Yes':'No'}</li>
-      </ul> */}
-
+        <h2>Signup or Add New Student</h2>
         <Form
             name="basic"
             labelCol={{ span: 8 }}

@@ -18,6 +18,9 @@ const UpdateStudentbyId = (props) => {
     props.getStudentById(id).then((response) => {
       setStudent(response.data);
       setLoading(false);
+      if(response.error){
+        navigate('/')
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -46,7 +49,12 @@ const UpdateStudentbyId = (props) => {
   }
 
   if(!id){
-    return <div>Error: 404</div>;
+    return navigate('/');
+  }
+
+  const authToken = localStorage.getItem("authToken");
+  if(!authToken){
+    navigate('/login')
   }
 
   const onFinish = (values) => {
