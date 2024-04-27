@@ -1,4 +1,5 @@
 import API from "../api/app-api";
+import { LOAD_USER_DATA } from "../types/userTypes";
 
 
 export function getAllStudents() {
@@ -80,7 +81,6 @@ export function getAllCategories() {
     };
 }
 
-export const LOAD_USER_DATA = 'LOAD_USER_DATA';
 export const loadUserData = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
     return {

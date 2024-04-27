@@ -18,13 +18,14 @@ const Login = (props) => {
     return <div>Loading...</div>;
   }
 
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const authToken = localStorage.getItem("authToken");
   if(authToken){
     navigate('/')
+    console.log('Navigate to Home')
   }
 
   const onFinish = (values) => {

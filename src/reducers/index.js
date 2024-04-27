@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOAD_USER_DATA } from '../redux/actions/app-action';
+import { LOAD_USER_DATA } from "../redux/types/userTypes";
 
 // Reducers
 const initialState = {
