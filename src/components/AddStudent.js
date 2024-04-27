@@ -127,7 +127,7 @@ const AddStudent = (props) => {
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-                Update
+                Submit
             </Button>
             </Form.Item>
         </Form>

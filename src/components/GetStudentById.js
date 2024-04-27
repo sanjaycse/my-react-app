@@ -46,7 +46,7 @@ const GetStudentById = (props) => {
   }
   return (
     <>
-      <h2>{student.name} Details</h2>
+      <h3>{student.name} Details</h3>
       <ul>
         <li>Phone: {student.phone}</li>
         <li>Category: {student.category.name}</li>

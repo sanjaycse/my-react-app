@@ -79,3 +79,12 @@ export function getAllCategories() {
         }
     };
 }
+
+export const LOAD_USER_DATA = 'LOAD_USER_DATA';
+export const loadUserData = () => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    return {
+      type: LOAD_USER_DATA,
+      payload: userData
+    };
+};

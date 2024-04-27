@@ -1,7 +1,13 @@
 import Axios from "axios";
 
+
+const authToken = localStorage.getItem("authToken");
+const headers = { 
+    'Authorization': `Bearer ${authToken}`
+};
+
 const getAllStudents = () => {
-    return Axios.get("http://localhost:3000/api/student", undefined, undefined);
+    return Axios.get("http://localhost:3000/api/student", undefined);
 };
 
 
@@ -14,7 +20,7 @@ const deleteStudentbyId = (id) => {
 };
 
 const updateStudentbyId = (id, data) => {
-    return Axios.put("http://localhost:3000/api/student/" + id, data, undefined);
+    return Axios.put("http://localhost:3000/api/student/" + id, data, { headers });
 };
 
 const addStudent = (data) => {

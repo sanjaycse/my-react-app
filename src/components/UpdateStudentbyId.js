@@ -75,13 +75,7 @@ const UpdateStudentbyId = (props) => {
   };
   return (
     <>
-      <h2>{student.name} Details</h2>
-      {/* <ul>
-        <li>Phone: {student.phone}</li>
-        <li>Category: {student.category.name}</li>
-        <li>Is Enrolled: {student.isEnrolled? 'Yes':'No'}</li>
-      </ul> */}
-
+        <h3>{student.name} Details</h3>
         <Form
             name="basic"
             labelCol={{ span: 8 }}

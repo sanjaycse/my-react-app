@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input, InputNumber, Select, Switch } from 'antd';
+import { Button, Form, Input} from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
@@ -39,6 +39,7 @@ const Login = (props) => {
     props.login(loginData).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("authToken", response.data.authToken);
+      props.loadUserData(JSON.stringify(response.data.user));
       setLoading(false);
       navigate('/');
     }).catch((err) =>{

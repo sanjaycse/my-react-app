@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
+import { LOAD_USER_DATA } from '../redux/actions/app-action';
 
 // Reducers
 const initialState = {
-  counter: 0,
+  user: null
 };
 
-const counterReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return { ...state, counter: state.counter + 1 };
-    case 'DECREMENT':
-      return { ...state, counter: state.counter - 1 };
+const userReducer = (state = initialState, action) => {
+  switch(action.type) {
+    case LOAD_USER_DATA:
+      return {
+        ...state,
+        user: action.payload
+      };
     default:
       return state;
   }
@@ -18,7 +20,7 @@ const counterReducer = (state = initialState, action) => {
 
 // Combine Reducers
 const rootReducer = combineReducers({
-  counter: counterReducer,
+  user: userReducer,
   // Add other reducers here if you have more
 });
 

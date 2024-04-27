@@ -3,7 +3,7 @@ import * as appAction from "../redux/actions/app-action";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button } from "antd" ;
+import { Button, Space, Table, Tag } from "antd" ;
 import { useNavigate } from 'react-router-dom';
 
 const GetAllStudents = (props) => {
@@ -13,7 +13,11 @@ const GetAllStudents = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    props.getAllStudents()
+    const authToken = localStorage.getItem("authToken");
+    if(!authToken){
+      navigate('/login')
+    }else{
+      props.getAllStudents()
       .then((response) => {
         setStudents(response.data);
         setLoading(false);
@@ -23,12 +27,43 @@ const GetAllStudents = (props) => {
         setError(err);
         setLoading(false);
       });
+    }
   }, []);
 
-  const authToken = localStorage.getItem("authToken");
-  if(!authToken){
-    navigate('/login')
-  }
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Phone',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      render: (text, record)=>(
+        <>
+          <Tag>
+            {record.category.name}
+          </Tag>
+        </>
+      )
+    },
+    {
+      title: 'Action',
+      render: (text, record)=>(
+        <>
+          <Space>
+            <Button onClick={() => handleUpdate(record._id)}>Update Details</Button>
+            <Button onClick={() => handleDelete(record._id)}>Delete</Button>
+          </Space>
+        </>
+      )
+    },
+  ];
 
   if (loading) {
     return <div>Loading...</div>;
@@ -48,25 +83,14 @@ const GetAllStudents = (props) => {
     })
   }
 
-  const handleLogout = ()=> {
-    localStorage.removeItem("user");
-    localStorage.removeItem("authToken");
-    navigate('/login')
+  const handleUpdate = (id) =>{
+    navigate(`/update?id=`+ id)
   }
 
   return (
-    <div>
-      Number of students: {students.length}
-      {students && (
-        <ul>
-          {students.map((item) => (
-            <li key={item._id}>{item.name} <Link to={`/student?id=`+ item._id}>Student Details</Link> | <Link to={`/update?id=`+ item._id}>Update Student Details</Link> | <Button onClick={() => handleDelete(item._id)}>Delete</Button></li>
-          ))}
-        </ul>
-      )}
-
-      <Button onClick={handleLogout}>Logout</Button>
-    </div>
+    <>
+      <Table dataSource={students} columns={columns} />
+    </>
   );
 };
 
