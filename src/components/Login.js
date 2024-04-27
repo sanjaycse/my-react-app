@@ -11,7 +11,10 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
+    const authToken = localStorage.getItem("authToken");
+    if(authToken){
+      navigate('/')
+    }
   }, []);
 
   if (loading) {
@@ -22,11 +25,7 @@ const Login = (props) => {
     return <div>Error: {error.message}</div>;
   }
 
-  const authToken = localStorage.getItem("authToken");
-  if(authToken){
-    navigate('/')
-    console.log('Navigate to Home')
-  }
+  
 
   const onFinish = (values) => {
     setLoading(true);
