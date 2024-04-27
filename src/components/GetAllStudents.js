@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as appAction from "../redux/actions/app-action";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Drawer, Space, Table, Tag } from "antd" ;
+import { Button, Drawer, Space, Spin, Table, Tag } from "antd" ;
 import { useNavigate } from 'react-router-dom';
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 
@@ -69,9 +69,9 @@ const GetAllStudents = (props) => {
     },
   ];
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -107,17 +107,19 @@ const GetAllStudents = (props) => {
 
   return (
     <>
-      <Table dataSource={students} columns={columns} />
+      <Spin spinning={loading} tip="Loading...">
+        <Table dataSource={students} columns={columns} />
 
-      <Drawer title='Student Details' onClose={onClose} open={open}>
-        <div>
-          <p>Name: {studentData?.name}</p>
-          <p>Phone: {studentData?.phone}</p>
-          <p>Username: {studentData?.username}</p>
-          <p>Category: {studentData?.category?.name}</p>
-          <p>Is Enrolled: {studentData?.isEnrolled ? 'Yes' : 'No'}</p>
-        </div>
-      </Drawer>
+        <Drawer title='Student Details' onClose={onClose} open={open}>
+          <div>
+            <p>Name: {studentData?.name}</p>
+            <p>Phone: {studentData?.phone}</p>
+            <p>Username: {studentData?.username}</p>
+            <p>Category: {studentData?.category?.name}</p>
+            <p>Is Enrolled: {studentData?.isEnrolled ? 'Yes' : 'No'}</p>
+          </div>
+        </Drawer>
+      </Spin>
     </>
   );
 };

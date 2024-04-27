@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input} from 'antd';
+import { Button, Form, Input, Spin} from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
@@ -17,9 +17,9 @@ const Login = (props) => {
     }
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -53,6 +53,7 @@ const Login = (props) => {
   };
   return (
     <>
+    <Spin spinning={loading} tip="Loading...">
       <h2 className='text-center my-5'>Login</h2>
 
         <Form
@@ -89,6 +90,7 @@ const Login = (props) => {
         </Form>
 
         <Link style={{ marginLeft: '40%'}} to={`/signup`}>If you dont have Account, Please click this link?</Link>
+      </Spin>
     </>
   )
 }

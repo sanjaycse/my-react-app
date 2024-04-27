@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input, InputNumber, Select, Switch } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Spin, Switch } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const AddStudent = (props) => {
@@ -24,9 +24,9 @@ const AddStudent = (props) => {
     });
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -55,6 +55,7 @@ const AddStudent = (props) => {
   };
   return (
     <>
+      <Spin spinning={loading} tip="Loading...">
         <h2 className='text-center my-5'>Signup or Add New Student</h2>
         <Form
             name="basic"
@@ -131,6 +132,7 @@ const AddStudent = (props) => {
             </Button>
             </Form.Item>
         </Form>
+      </Spin>
     </>
   )
 }

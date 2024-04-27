@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input, InputNumber, Select, Switch } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Spin, Switch } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateStudentbyId = (props) => {
@@ -28,7 +28,7 @@ const UpdateStudentbyId = (props) => {
       setLoading(false);
     });
 
-
+    setLoading(true);
     props.getAllCategories().then((response) => {
         setCategory(response.data);
         setLoading(false);
@@ -40,9 +40,9 @@ const UpdateStudentbyId = (props) => {
     });
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -76,7 +76,9 @@ const UpdateStudentbyId = (props) => {
   };
   return (
     <>
-        <h3 className='text-center my-5'>{student.name} Details</h3>
+    {!loading && 
+      <Spin spinning={loading} tip="Loading...">
+        <h3 className='text-center my-5'>{student?.name} Details</h3>
         <Form
             name="basic"
             labelCol={{ span: 8 }}
@@ -150,6 +152,8 @@ const UpdateStudentbyId = (props) => {
             </Button>
             </Form.Item>
         </Form>
+      </Spin>
+    }
     </>
   )
 }
