@@ -35,11 +35,16 @@ const Nav = (props) => {
                 </li> */}
                 </ul>
                 
-                {props.loadUserData()?.payload && (
-                <Space>
-                    <h5 style={{color:'white'}}>Welcome {props.loadUserData()?.payload?.name}</h5>
-                    <Button onClick={handleLogout}>Logout</Button>
-                </Space>
+                {props.loadUserData()?.payload ? (
+                  <Space>
+                      <h5 style={{color:'white'}}>Welcome {props.loadUserData()?.payload?.name}</h5>
+                      <Button onClick={handleLogout}>Logout</Button>
+                  </Space>
+                ) : (
+                  <Space>
+                    <Link to={'/login'}>Login</Link>
+                    <Link to={'/signup'}>Sign Up</Link>
+                  </Space>
                 )}
             </div>
             </div>

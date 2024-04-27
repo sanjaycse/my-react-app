@@ -55,12 +55,12 @@ const AddStudent = (props) => {
   };
   return (
     <>
-        <h2>Signup or Add New Student</h2>
+        <h2 className='text-center my-5'>Signup or Add New Student</h2>
         <Form
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600, margin:'auto' }}
             initialValues={student}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}

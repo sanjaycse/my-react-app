@@ -59,6 +59,7 @@ const UpdateStudentbyId = (props) => {
 
   const onFinish = (values) => {
     setLoading(true);
+    delete values.username;
     props.updateStudentbyId(id, values).then((response) => {
         setStudent(response.data);
         setLoading(false);
@@ -75,12 +76,12 @@ const UpdateStudentbyId = (props) => {
   };
   return (
     <>
-        <h3>{student.name} Details</h3>
+        <h3 className='text-center my-5'>{student.name} Details</h3>
         <Form
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600, margin:'auto' }}
             initialValues={student}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -92,6 +93,13 @@ const UpdateStudentbyId = (props) => {
             rules={[{ required: true, message: 'Please input your name!' }]}
             >
                 <Input />
+            </Form.Item>
+
+            <Form.Item
+            label="Username"
+            name="username"
+            >
+                <Input disabled />
             </Form.Item>
 
             <Form.Item

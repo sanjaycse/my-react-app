@@ -18,6 +18,7 @@ function App() {
     <>
     <Router>
       <Nav />
+      <br />
       <div className='container'>
         <Routes>
           <Route path="/login" element={<Login />} />

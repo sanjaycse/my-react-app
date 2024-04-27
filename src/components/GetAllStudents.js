@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react';
 import * as appAction from "../redux/actions/app-action";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Button, Space, Table, Tag } from "antd" ;
+import { Button, Drawer, Space, Table, Tag } from "antd" ;
 import { useNavigate } from 'react-router-dom';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 
 const GetAllStudents = (props) => {
   const [students, setStudents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [studentData, setStudentData] = useState(null);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(props)
     const authToken = localStorage.getItem("authToken");
     if(!authToken){
       navigate('/login')
@@ -57,8 +60,9 @@ const GetAllStudents = (props) => {
       render: (text, record)=>(
         <>
           <Space>
-            <Button onClick={() => handleUpdate(record._id)}>Update Details</Button>
-            <Button onClick={() => handleDelete(record._id)}>Delete</Button>
+            <EyeOutlined onClick={() => handleDrawer(record._id)} />
+            <EditOutlined onClick={() => handleUpdate(record._id)} />
+            <DeleteOutlined onClick={() => handleDelete(record._id)} />
           </Space>
         </>
       )
@@ -87,9 +91,33 @@ const GetAllStudents = (props) => {
     navigate(`/update?id=`+ id)
   }
 
+  const handleDrawer = (id) =>{
+    setLoading(true);
+    props.getStudentById(id).then((response)=>{
+      setOpen(true);
+      setStudentData(response.data)
+      setLoading(false);
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Table dataSource={students} columns={columns} />
+
+      <Drawer title='Student Details' onClose={onClose} open={open}>
+        <div>
+          <p>Name: {studentData?.name}</p>
+          <p>Phone: {studentData?.phone}</p>
+          <p>Username: {studentData?.username}</p>
+          <p>Category: {studentData?.category?.name}</p>
+          <p>Is Enrolled: {studentData?.isEnrolled ? 'Yes' : 'No'}</p>
+        </div>
+      </Drawer>
     </>
   );
 };

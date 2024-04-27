@@ -53,13 +53,13 @@ const Login = (props) => {
   };
   return (
     <>
-      <h2>Login</h2>
+      <h2 className='text-center my-5'>Login</h2>
 
         <Form
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600, margin: 'auto' }}
             // initialValues={student}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -88,7 +88,7 @@ const Login = (props) => {
             </Form.Item>
         </Form>
 
-        <Link to={`/signup`}>If you dont have Account, Please click this link?</Link>
+        <Link style={{ marginLeft: '40%'}} to={`/signup`}>If you dont have Account, Please click this link?</Link>
     </>
   )
 }
