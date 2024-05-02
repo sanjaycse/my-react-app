@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input, InputNumber, Select, Spin, Switch } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Spin, Switch, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const AddStudent = (props) => {
@@ -41,10 +41,12 @@ const AddStudent = (props) => {
     setLoading(true);
     props.addStudent(values).then((response) => {
         setStudent(response.data);
+        message.success('Accout for this student created successfully');
         setLoading(false);
         navigate('/login');
     }).catch((err) =>{
         setError(err);
+        message.error(err);
         setLoading(false);
     })
 
@@ -78,7 +80,7 @@ const AddStudent = (props) => {
             <Form.Item
             label="Username"
             name="username"
-            rules={[{ required: true, message: 'Please input your name!' }]}
+            rules={[{ required: true, message: 'Please input your Username!' }]}
             >
                 <Input />
             </Form.Item>
@@ -103,6 +105,7 @@ const AddStudent = (props) => {
                 label="Category"
                 name="categoryId"
                 initialValue={student?.category?._id}
+                rules={[{ required: true, message: 'Please select Category!' }]}
             >
                 <Select>
                     {category && category.length > 0 &&

@@ -7,11 +7,16 @@ import AddStudent from './components/AddStudent';
 import Login from './components/Login';
 import { useEffect } from 'react';
 import Nav from './components/Nav';
+import PrivateRoute from './routes/PrivateRoute';
+import routeOptions from "./routes/routes";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as appAction from "../src/redux/actions/app-action";
 
-function App() {
-  
+function App(props) {
+  const isAuthenticated = props.loadUserData();
   useEffect(() => {
-
+    
   }, []
   );
   return (
@@ -33,4 +38,17 @@ function App() {
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+      { ...appAction },
+      dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

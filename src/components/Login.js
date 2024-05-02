@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input, Spin} from 'antd';
+import { Button, Form, Input, Spin, message} from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
@@ -21,9 +21,9 @@ const Login = (props) => {
   //   return <div>Loading...</div>;
   // }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   
 
@@ -39,11 +39,14 @@ const Login = (props) => {
     props.login(loginData).then((response) => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("authToken", response.data.authToken);
-      props.loadUserData(JSON.stringify(response.data.user));
+      props.loadUserData(JSON.stringify(response.data.user))
+      message.success('Login successfully');
       setLoading(false);
       navigate('/');
     }).catch((err) =>{
       setError(err);
+      console.log(err)
+      message.error('Please try with correct credentials!');
       setLoading(false);
     });
   };

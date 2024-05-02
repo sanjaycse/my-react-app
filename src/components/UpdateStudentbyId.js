@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as appAction from "../redux/actions/app-action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Input, InputNumber, Select, Spin, Switch } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Spin, Switch, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateStudentbyId = (props) => {
@@ -63,6 +63,7 @@ const UpdateStudentbyId = (props) => {
     props.updateStudentbyId(id, values).then((response) => {
         setStudent(response.data);
         setLoading(false);
+        message.success('Student updated successfully');
         navigate('/');
     }).catch((err) =>{
         setError(err);

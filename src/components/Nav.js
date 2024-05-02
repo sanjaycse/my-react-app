@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Button, Space, message } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -6,17 +6,17 @@ import * as appAction from "../redux/actions/app-action";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Nav = (props) => {
-  const [userData, setUserData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   
   useEffect(() => {
-    setUserData(props.loadUserData());
+    props.loadUserData()
   }, [location.pathname]);
 
   const handleLogout = ()=> {
     localStorage.removeItem("user");
     localStorage.removeItem("authToken");
+    message.info('Logout successfully');
     navigate('/login');
   }
   return (

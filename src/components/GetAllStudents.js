@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as appAction from "../redux/actions/app-action";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Drawer, Space, Spin, Table, Tag } from "antd" ;
+import { Button, Drawer, Space, Spin, Table, Tag, message } from "antd" ;
 import { useNavigate } from 'react-router-dom';
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 
@@ -82,6 +82,7 @@ const GetAllStudents = (props) => {
     props.deleteStudentbyId(id).then((response)=>{
       setStudents(response.data)
       setLoading(false);
+      message.success('Student deleted successfully');
     }).catch((err)=>{
       console.log(err)
     })
