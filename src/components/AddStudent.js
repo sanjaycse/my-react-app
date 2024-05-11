@@ -107,7 +107,7 @@ const AddStudent = (props) => {
                 initialValue={student?.category?._id}
                 rules={[{ required: true, message: 'Please select Category!' }]}
             >
-                <Select>
+                <Select mode="multiple">
                     {category && category.length > 0 &&
                         category.map(function (item) {
                             return (

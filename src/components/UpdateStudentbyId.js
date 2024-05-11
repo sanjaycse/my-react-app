@@ -123,9 +123,11 @@ const UpdateStudentbyId = (props) => {
             <Form.Item
                 label="Category"
                 name="categoryId"
-                initialValue={student?.category?._id}
+                initialValue={student?.category?.map((category) => (
+                  category._id
+                ))}
             >
-                <Select>
+                <Select mode="multiple">
                     {category && category.length > 0 &&
                         category.map(function (item) {
                             return (

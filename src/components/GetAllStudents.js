@@ -47,13 +47,13 @@ const GetAllStudents = (props) => {
     {
       title: 'Category',
       dataIndex: 'category',
-      render: (text, record)=>(
-        <>
-          <Tag>
-            {record.category.name}
-          </Tag>
-        </>
-      )
+      render: (categories) => (
+        <span>
+          {categories.map(category => (
+            <Tag key={category._id}>{category.name}</Tag>
+          ))}
+        </span>
+      ),
     },
     {
       title: 'Action',
@@ -79,13 +79,19 @@ const GetAllStudents = (props) => {
 
   const handleDelete = (id) => {
     setLoading(true);
-    props.deleteStudentbyId(id).then((response)=>{
-      setStudents(response.data)
+    const userLocal = JSON.parse(localStorage.getItem("user"))
+    if(userLocal.id == id){
+      message.error("This user is currently Logedin. So you can't delete this user.");
       setLoading(false);
-      message.success('Student deleted successfully');
-    }).catch((err)=>{
-      console.log(err)
-    })
+    }else{
+      props.deleteStudentbyId(id).then((response)=>{
+        setStudents(response.data)
+        setLoading(false);
+        message.success('Student deleted successfully');
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
   }
 
   const handleUpdate = (id) =>{
@@ -111,12 +117,20 @@ const GetAllStudents = (props) => {
       <Spin spinning={loading} tip="Loading...">
         <Table dataSource={students} columns={columns} />
 
-        <Drawer title='Student Details' onClose={onClose} open={open}>
+        <Drawer title='Student Details' onClose={onClose} open={open} width={800}>
           <div>
             <p>Name: {studentData?.name}</p>
             <p>Phone: {studentData?.phone}</p>
             <p>Username: {studentData?.username}</p>
-            <p>Category: {studentData?.category?.name}</p>
+            <p>Category:
+              <span style={{marginLeft: '10px'}}>
+              {
+                studentData?.category?.map((category) => (
+                  <Tag style={{marginBottom : '5px'}}>{category.name}</Tag>
+                ))
+              }
+              </span> 
+            </p>
             <p>Is Enrolled: {studentData?.isEnrolled ? 'Yes' : 'No'}</p>
           </div>
         </Drawer>
